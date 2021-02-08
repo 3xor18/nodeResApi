@@ -8,8 +8,11 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 /* BD */
 let urlBD;
-
-urlBD = `mongodb+srv://gerson:gerson@cluster0.sca18.mongodb.net/cafe`;
+if (process.env.NODE_ENV === 'dev') {
+	urlBD = 'mongodb://localhost:27017/cefe';
+} else {
+	urlBD = process.env.MONGO_URI;
+}
 
 process.env.URLDB = urlBD;
 /* BD */
