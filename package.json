@@ -5,7 +5,7 @@
 	"engines": {
 		"node": "14.15.1"
 	},
-	"main": "app.js",
+	"main": "server.js",
 	"scripts": {
 		"start": "nodemon server/server",
 		"test": "echo \"Error: no test specified\" && exit 1"

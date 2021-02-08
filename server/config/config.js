@@ -11,10 +11,7 @@ let urlBD;
 if (process.env.NODE_ENV === 'dev') {
 	urlBD = 'mongodb://localhost:27017/cefe';
 } else {
-	const bdname = `test`;
-	const user = `gerson`;
-	const password = `gerson`;
-	urlBD = `mongodb+srv://${user}:${password}@cluster0.sca18.mongodb.net/${bdname}`;
+	urlBD = `mongodb+srv://gerson:gerson@cluster0.sca18.mongodb.net/test`;
 }
 
 process.env.URLDB = urlBD;
