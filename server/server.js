@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(require('./routes/usuario'));
 
-mongoose.connect('mongodb://localhost:27017/cefe', (err, res) => {
+mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useCreateIndex: true }, (err, res) => {
 	if (err) throw new err();
 
 	console.log('Bd Online');
