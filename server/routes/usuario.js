@@ -6,7 +6,9 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const usuario = require('../models/usuario');
 
-app.get('/usuario', function (req, res) {
+const { verificarToken, verificaRoleAdmin } = require('../middlewares/authentication');
+
+app.get('/usuario', verificarToken, function (req, res) {
 	const estado = true;
 
 	let desde = req.query.desde || 0;
@@ -37,12 +39,12 @@ app.get('/usuario', function (req, res) {
 		});
 });
 
-app.get('/usuario/:id', function (req, res) {
+app.get('/usuario/:id', verificarToken, function (req, res) {
 	let id = req.params.id;
 	res.json(`Get user ${id}`);
 });
 
-app.post('/usuario', function (req, res) {
+app.post('/usuario', [verificarToken, verificaRoleAdmin], function (req, res) {
 	const body = req.body;
 
 	const usuario = new Usuario({
@@ -68,7 +70,7 @@ app.post('/usuario', function (req, res) {
 
 const permitidosEditar = ['nombre', 'email', 'password', 'img', 'role', 'estado'];
 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id', [verificarToken, verificaRoleAdmin], function (req, res) {
 	let id = req.params.id;
 	let body = _.pick(req.body, permitidosEditar);
 
@@ -87,7 +89,7 @@ app.put('/usuario/:id', function (req, res) {
 	});
 });
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verificarToken, verificaRoleAdmin], function (req, res) {
 	let id = req.params.id;
 
 	Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
@@ -103,7 +105,7 @@ app.delete('/usuario/:id', function (req, res) {
 	});
 });
 
-app.put('/usuario/logico/:id', function (req, res) {
+app.put('/usuario/logico/:id', verificarToken, function (req, res) {
 	let id = req.params.id;
 
 	const cambiaEstado = {
